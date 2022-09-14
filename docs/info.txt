@@ -1,0 +1,22 @@
+# Form
+Resizible, content follows
+Tree sidebar
+Content area
+File menu strip
+
+# Tree
+Selecting item updates content
+
+# Content
+
+# Behavior
+Can add new notes, adds new node and selects it, File->new
+Can remove notes via tree, select and File->delete
+Cant make orphans!
+
+
+## Add note
+
+## Update note
+Selecting a tree node, opens note details related to that node.
+Updating any text fields updates the note memory
