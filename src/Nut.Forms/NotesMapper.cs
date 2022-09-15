@@ -4,17 +4,16 @@ namespace Nut.Forms
 {
     public static class NotesMapper
     {
-        public static IEnumerable<TreeNode> MapToTreeNodes(IEnumerable<Note> notes)
-        {
-            if (notes is null)
-            {
-                throw new ArgumentNullException(nameof(notes));
-            }
+        public static IEnumerable<TreeNode> MapToTreeNodes(
+            IEnumerable<Note> notes,
+            ContextMenuStrip contextMenu)
+            => notes is null
+                ? throw new ArgumentNullException(nameof(notes))
+                : MapToTreeNodesIntern(notes, contextMenu);
 
-            return MapToTreeNodesIntern(notes);
-        }
-
-        private static IEnumerable<TreeNode> MapToTreeNodesIntern(IEnumerable<Note> notes)
+        private static IEnumerable<TreeNode> MapToTreeNodesIntern(
+            IEnumerable<Note> notes,
+            ContextMenuStrip contextMenu)
         {
             var notesArray = notes.ToArray();
             if (notesArray.Length <= 0)
@@ -27,11 +26,12 @@ namespace Nut.Forms
             {
                 var node = new TreeNode(note.Title)
                 {
-                    Tag = note.Id
+                    Tag = note.Id,
+                    ContextMenuStrip = contextMenu
                 };
 
                 results.Add(node);
-                node.Nodes.AddRange(MapToTreeNodesIntern(note.Children).ToArray());
+                node.Nodes.AddRange(MapToTreeNodesIntern(note.Children, contextMenu).ToArray());
             }
 
             return results;

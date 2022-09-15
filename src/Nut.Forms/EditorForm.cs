@@ -4,60 +4,72 @@ namespace Nut.Forms
 {
     public partial class EditorForm : Form
     {
-        private readonly NoteSelection _currentSelection;
         private readonly NotesRepository _repository;
+        private readonly Selection _selection;
 
         public EditorForm()
         {
             _repository = new NotesRepository();
-            _currentSelection = new NoteSelection();
+            _selection = new Selection();
 
             InitializeComponent();
             SubscribeTreeListeners();
-            SyncTreeWithNotes();
+            UpdateNotesTreeView();
+            ProcessSelectedNodeChange(notesTree.Nodes[0]);
         }
 
-        public void SyncTreeWithNotes()
+        public void UpdateNotesTreeView()
         {
             var notes = _repository.GetNotes();
-            var nodes = NotesMapper.MapToTreeNodes(notes);
+            var nodes = NotesMapper.MapToTreeNodes(notes, noteContextMenu);
 
             notesTree.Nodes.Clear();
             notesTree.Nodes.AddRange(nodes.ToArray());
+
+            notesTree.ExpandAll();
         }
 
-        private void OnNodeClickedHandler(object? sender, EventArgs e)
+        private static Guid GetNoteId(TreeNode node) => (Guid)node.Tag;
+
+        private void ClearSelection() => _selection.Clear();
+
+        private TreeNode? GetClickedNode()
         {
-            var treeView = (TreeView)sender!;
-            SelectNode(treeView.SelectedNode);
+            var point = notesTree.PointToClient(Cursor.Position);
+            var hitTest = notesTree.HitTest(point);
+
+            return hitTest?.Node;
+        }
+
+        private void ProcessSelectedNodeChange(TreeNode node)
+        {
+            var noteId = GetNoteId(node);
+            var note = _repository.GetNoteById(noteId);
+
+            SaveCurrentNote();
+            UpdateSelection(node);
+            UpdateDetails(note);
         }
 
         private void SaveCurrentNote()
         {
-            if (_currentSelection.IsEmpty())
+            if (_selection.IsEmpty())
             {
                 return;
             }
 
-            _currentSelection.Note!.UpdateTitle(noteDetails.TitleTextBox.Text);
-            _currentSelection.Note!.UpdateContent(noteDetails.ContentTextBox.Text);
+            _selection.TreeNode!.Text = noteDetails.TitleTextBox.Text;
 
-            _currentSelection.TreeNode!.Text = noteDetails.TitleTextBox.Text;
-        }
+            var noteId = GetNoteId(_selection.TreeNode);
+            var title = noteDetails.TitleTextBox.Text;
+            var content = noteDetails.ContentTextBox.Text;
 
-        private void SelectNode(TreeNode node)
-        {
-            var noteId = (Guid)node.Tag;
-            var note = _repository.GetNoteById(noteId);
-
-            SaveCurrentNote();
-            UpdateSelection(node, note!);
-            UpdateDetails(note!);
+            _repository.UpdateById(noteId, title, content);
         }
 
         private void SubscribeTreeListeners()
         {
-            notesTree.AfterSelect += OnNodeClickedHandler;
+            notesTree.Click += OnNodeClickedHandler;
         }
 
         private void UpdateDetails(Note note)
@@ -66,9 +78,64 @@ namespace Nut.Forms
             noteDetails.ContentTextBox.Text = note.Content;
         }
 
-        private void UpdateSelection(TreeNode node, Note note)
+        private void UpdateSelection(TreeNode node) => _selection.Update(node);
+
+        #region Event handlers
+
+        private void OnFileCloseMenuClick(object sender, EventArgs e) => Environment.Exit(0);
+
+        private void OnNodeClickedHandler(object? sender, EventArgs e)
         {
-            _currentSelection.Update(note!, node);
+            var node = GetClickedNode();
+            if (node == null)
+            {
+                return;
+            }
+
+            ProcessSelectedNodeChange(node);
         }
+
+        private void OnNoteAddNoteMenuClick(object sender, EventArgs e)
+        {
+            var selectedNode = _selection.TreeNode;
+            if (selectedNode is null)
+            {
+                return;
+            }
+
+            var parentId = GetNoteId(selectedNode);
+            var note = new Note("*", "", parentId);
+
+            _repository.AddNote(parentId, note);
+            UpdateNotesTreeView();
+        }
+
+        private void OnNoteDeleteNoteMenuClick(object sender, EventArgs e)
+        {
+            var selectedNode = _selection.TreeNode;
+            if (selectedNode is null)
+            {
+                return;
+            }
+
+            var noteId = GetNoteId(selectedNode);
+            _repository.DeleteById(noteId);
+
+            ClearSelection();
+            UpdateNotesTreeView();
+        }
+
+        private void OnNoteNewMenuClick(object sender, EventArgs e)
+        {
+            var note = new Note("*", "");
+            _repository.AddNote(note);
+
+            UpdateNotesTreeView();
+        }
+
+        private void OnSaveTimerTick(object sender, EventArgs e)
+            => SaveCurrentNote();
+
+        #endregion Event handlers
     }
 }

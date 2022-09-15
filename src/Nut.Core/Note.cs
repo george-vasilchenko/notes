@@ -1,28 +1,63 @@
-﻿namespace Nut.Core
+﻿using System.Collections.ObjectModel;
+using Newtonsoft.Json;
+
+namespace Nut.Core
 {
     public class Note
     {
-        public Note(string title, string content, IEnumerable<Note>? children = null)
+        [JsonProperty("children")]
+        private readonly Collection<Note> _children;
+
+        public Note(string title, string content, Guid? parentId = null)
         {
             Id = Guid.NewGuid();
             Content = content;
+            ParentId = parentId;
             Title = title;
-            Children = children ?? Array.Empty<Note>();
+            _children = new Collection<Note>();
         }
 
-        public IEnumerable<Note> Children { get; }
+        private Note()
+        {
+        }
+
+        [JsonIgnore]
+        public IEnumerable<Note> Children => _children;
+
+        [JsonProperty("content")]
         public string Content { get; private set; }
-        public Guid Id { get; }
+
+        [JsonProperty("id")]
+        public Guid Id { get; private set; }
+
+        [JsonProperty("parentId")]
+        public Guid? ParentId { get; private set; }
+
+        [JsonProperty("title")]
         public string Title { get; private set; }
 
-        public void UpdateContent(string content)
+        public void UpdateContent(string content) => Content = content;
+
+        public void UpdateTitle(string title) => Title = title;
+
+        internal void AddNote(Note note)
         {
-            Content = content;
+            if (note is null)
+            {
+                throw new ArgumentNullException(nameof(note));
+            }
+
+            _children.Add(note);
         }
 
-        public void UpdateTitle(string title)
+        internal void RemoveNote(Note note)
         {
-            Title = title;
+            if (note is null)
+            {
+                throw new ArgumentNullException(nameof(note));
+            }
+
+            _children.Remove(note);
         }
     }
 }

@@ -43,14 +43,14 @@
             this.notePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.notePanel.Location = new System.Drawing.Point(0, 0);
             this.notePanel.Name = "notePanel";
-            this.notePanel.Size = new System.Drawing.Size(902, 814);
+            this.notePanel.Size = new System.Drawing.Size(989, 814);
             this.notePanel.TabIndex = 1;
             // 
             // noteTableLayoutPanel
             // 
             this.noteTableLayoutPanel.ColumnCount = 2;
-            this.noteTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 8.803612F));
-            this.noteTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 91.19639F));
+            this.noteTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
+            this.noteTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 300F));
             this.noteTableLayoutPanel.Controls.Add(this.titleLabel, 0, 0);
             this.noteTableLayoutPanel.Controls.Add(this.titleTextBox, 1, 0);
             this.noteTableLayoutPanel.Controls.Add(this.contentTextBox, 0, 1);
@@ -58,11 +58,9 @@
             this.noteTableLayoutPanel.Location = new System.Drawing.Point(0, 0);
             this.noteTableLayoutPanel.Name = "noteTableLayoutPanel";
             this.noteTableLayoutPanel.RowCount = 2;
-            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 4.135338F));
-            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 95.86466F));
-            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.noteTableLayoutPanel.Size = new System.Drawing.Size(902, 814);
+            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 3.562654F));
+            this.noteTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 96.43735F));
+            this.noteTableLayoutPanel.Size = new System.Drawing.Size(989, 814);
             this.noteTableLayoutPanel.TabIndex = 0;
             // 
             // titleLabel
@@ -70,23 +68,20 @@
             this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.titleLabel.AutoSize = true;
             this.titleLabel.BackColor = System.Drawing.SystemColors.Control;
-            this.titleLabel.Location = new System.Drawing.Point(3, 4);
+            this.titleLabel.Location = new System.Drawing.Point(3, 2);
             this.titleLabel.Name = "titleLabel";
-            this.titleLabel.Size = new System.Drawing.Size(73, 25);
+            this.titleLabel.Size = new System.Drawing.Size(58, 25);
             this.titleLabel.TabIndex = 0;
             this.titleLabel.Text = "Title";
             this.titleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // titleTextBox
             // 
-            this.titleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.titleTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.titleTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.titleTextBox.Location = new System.Drawing.Point(82, 3);
-            this.titleTextBox.Multiline = true;
+            this.titleTextBox.Location = new System.Drawing.Point(67, 3);
             this.titleTextBox.Name = "titleTextBox";
-            this.titleTextBox.Size = new System.Drawing.Size(817, 27);
+            this.titleTextBox.Size = new System.Drawing.Size(919, 24);
             this.titleTextBox.TabIndex = 1;
             // 
             // contentTextBox
@@ -96,9 +91,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.contentTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.noteTableLayoutPanel.SetColumnSpan(this.contentTextBox, 2);
-            this.contentTextBox.Location = new System.Drawing.Point(3, 36);
+            this.contentTextBox.Location = new System.Drawing.Point(3, 32);
             this.contentTextBox.Name = "contentTextBox";
-            this.contentTextBox.Size = new System.Drawing.Size(896, 775);
+            this.contentTextBox.Size = new System.Drawing.Size(983, 779);
             this.contentTextBox.TabIndex = 2;
             this.contentTextBox.Text = "";
             // 
@@ -108,7 +103,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.notePanel);
             this.Name = "NoteDetails";
-            this.Size = new System.Drawing.Size(902, 814);
+            this.Size = new System.Drawing.Size(989, 814);
             this.notePanel.ResumeLayout(false);
             this.noteTableLayoutPanel.ResumeLayout(false);
             this.noteTableLayoutPanel.PerformLayout();

@@ -9,11 +9,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nut.Forms", "src\Nut.Forms\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nut.Core", "src\Nut.Core\Nut.Core.csproj", "{C95AFC9B-33C5-46A0-B9C6-362619BD6630}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nut.Forms.Controls", "src\Nut.Forms.Controls\Nut.Forms.Controls.csproj", "{85D8DD7C-3266-4194-B73E-BA6FEBB99288}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nut.Forms.Controls", "src\Nut.Forms.Controls\Nut.Forms.Controls.csproj", "{85D8DD7C-3266-4194-B73E-BA6FEBB99288}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6172D9F2-B42F-4907-B09D-47298DBF4F6E}"
 	ProjectSection(SolutionItems) = preProject
 		docs\info.txt = docs\info.txt
+		docs\readme.md = docs\readme.md
 	EndProjectSection
 EndProject
 Global
