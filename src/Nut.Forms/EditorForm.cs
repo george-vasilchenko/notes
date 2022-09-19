@@ -15,7 +15,7 @@ namespace Nut.Forms
             InitializeComponent();
             SubscribeTreeListeners();
             UpdateNotesTreeView();
-            ProcessSelectedNodeChange(notesTree.Nodes[0]);
+            ProcessSelectedNodeChange(GetFirstOrDefaultNote());
         }
 
         public void UpdateNotesTreeView()
@@ -41,8 +41,15 @@ namespace Nut.Forms
             return hitTest?.Node;
         }
 
-        private void ProcessSelectedNodeChange(TreeNode node)
+        private TreeNode? GetFirstOrDefaultNote() => notesTree.Nodes.Count == 0 ? null : notesTree.Nodes[0];
+
+        private void ProcessSelectedNodeChange(TreeNode? node)
         {
+            if (node is null)
+            {
+                return;
+            }
+
             var noteId = GetNoteId(node);
             var note = _repository.GetNoteById(noteId);
 

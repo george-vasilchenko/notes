@@ -132,7 +132,7 @@
             // saveTimer
             // 
             this.saveTimer.Enabled = true;
-            this.saveTimer.Interval = 1000;
+            this.saveTimer.Interval = 500;
             this.saveTimer.Tick += new System.EventHandler(this.OnSaveTimerTick);
             // 
             // noteContextMenu

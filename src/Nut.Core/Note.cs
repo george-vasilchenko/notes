@@ -19,6 +19,7 @@ namespace Nut.Core
 
         private Note()
         {
+
         }
 
         [JsonIgnore]
